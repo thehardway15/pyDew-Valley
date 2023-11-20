@@ -49,7 +49,7 @@ class Level:
 
         # Trees
         for obj in tmx_data.get_layer_by_name('Trees'):
-            Tree((obj.x, obj.y), obj.image, [self.all_sprites, self.collision_sprites, self.tree_sprites], obj.name)
+            Tree((obj.x, obj.y), obj.image, [self.all_sprites, self.collision_sprites, self.tree_sprites], obj.name, self.player_add)
 
         # collision
         for x, y, surf in tmx_data.get_layer_by_name('Collision').tiles():
@@ -66,6 +66,9 @@ class Level:
             groups=self.all_sprites,
             z=LAYERS['ground']
         )
+
+    def player_add(self, item):
+        self.player.item_inventory[item] += 1
 
     def run(self, dt):
         self.display_surface.fill("black")
