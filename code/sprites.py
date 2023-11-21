@@ -87,6 +87,9 @@ class Tree(Generic):
         self.player_add = player_add
 
     def create_fruit(self):
+        if not self.alive:
+            return
+
         for g in self.groups():
             if g.__class__.__name__ == 'CameraGroup':
                 all_sprites = g
