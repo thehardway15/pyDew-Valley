@@ -94,7 +94,7 @@ class Player(pygame.sprite.Sprite):
         self.target_pos = self.rect.center + PLAYER_TOOL_OFFSET[self.status.split('_')[0]]
 
     def plant_seed(self):
-        print(f"{self.selected_seed} planted")
+        self.soil_layer.plant_seed(self.target_pos, self.selected_seed)
 
     def input(self):
         keys = pygame.key.get_pressed()
@@ -184,7 +184,6 @@ class Player(pygame.sprite.Sprite):
                             self.hitbox.top = sprite.hitbox.bottom
                         self.rect.centery = self.hitbox.centery
                         self.pos.y = self.hitbox.centery
-
 
     def move(self, dt):
         # normalazing a vector (diagonal move speed)
