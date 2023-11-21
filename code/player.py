@@ -6,7 +6,7 @@ from timer import Timer
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self, pos, group, collision_sprites, tree_sprites):
+    def __init__(self, pos, group, collision_sprites, tree_sprites, interaction_sprites):
         super().__init__(group)
 
         self.import_assets()
@@ -55,6 +55,8 @@ class Player(pygame.sprite.Sprite):
 
         # interaction
         self.tree_sprites = tree_sprites
+        self.interaction_sprites = interaction_sprites
+        self.sleep = False
 
     def import_assets(self):
         self.animations = {
@@ -96,7 +98,7 @@ class Player(pygame.sprite.Sprite):
     def input(self):
         keys = pygame.key.get_pressed()
 
-        if not self.timers['tool use'].active:
+        if not self.timers['tool use'].active and not self.sleep:
             # movement
             if keys[pygame.K_UP]:
                 self.direction.y = -1
@@ -143,6 +145,16 @@ class Player(pygame.sprite.Sprite):
                 if self.seed_index >= len(self.seeds):
                     self.seed_index = 0
                 self.selected_seed = self.seeds[self.seed_index]
+
+            if keys[pygame.K_RETURN]:
+                collided_interaction_sprites = pygame.sprite.spritecollide(self, self.interaction_sprites, False)
+                if collided_interaction_sprites:
+                    if collided_interaction_sprites[0].name == 'Trader':
+                        pass
+                    else:
+                        self.status = 'left_idle'
+                        self.sleep = True
+
 
     def get_status(self):
         # idle
