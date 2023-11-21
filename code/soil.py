@@ -55,6 +55,7 @@ class Plant(pygame.sprite.Sprite):
             self.image = self.frames[int(self.age)]
             self.rect = self.image.get_rect(midbottom = self.soil.rect.midbottom + pygame.math.Vector2(0, self.y_offset))
 
+
 class SoilLayer:
     def __init__(self, all_sprites, collision_sprites):
 
